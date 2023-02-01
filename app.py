@@ -30,7 +30,7 @@ def drawBoundingBoxesAndLabel(image: Image, faces, preds):
         if os.name == 'nt':
             font = ImageFont.truetype("arial.ttf", 50)
         else:
-            font = ImageFont.truetype("/usr/share/fonts/arial.ttf", 50)
+            font = ImageFont.truetype("/usr/share/fonts/truetype/arial.ttf", 50)
 
         text_bbox = draw.textbbox((x, y - 50), label, font=font)
 
