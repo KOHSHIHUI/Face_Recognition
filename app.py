@@ -73,7 +73,7 @@ def predict(image: Image, with_label=True):
     x = x.reshape(1, 160, 160, 3)
     x = embedder.embeddings(x)
     conf = max(model.predict_proba(x)[0])
-    if (conf < 0.25):  # 0.25 is the threshold
+    if (conf < 0.15):  # 0.25 is the threshold
         print("Not recognizable !")
         return "", -1
     else:
@@ -86,7 +86,7 @@ def loadModels():
     # Load models
     detector = MTCNN()
     embedder = FaceNet()
-    model = pickle.load(open('./models/fsktm_1.pkl', 'rb'))
+    model = pickle.load(open('./models/fsktm.pkl', 'rb'))
     labels = get_label("./data/fsktm")
 
     return embedder, detector, model, labels
@@ -113,6 +113,9 @@ def faceDetection(my_upload):
 
     return image, output, preds, confs
 
+def color_present(val):
+    color = '#00FF0C' if val == "Present" else '#FC1717'
+    return f'background-color: {color}'
 
 st.set_page_config(layout="wide", page_title="FSKTM Attendance System")
 
@@ -133,6 +136,7 @@ if my_upload is not None:
     with st.spinner(text="Predicting ..."):
         image, output, preds, confs = faceDetection(my_upload)
         df = getDataframe(preds, confs)
+        df = df.style.applymap(color_present, subset=['Present'])
         df.to_excel("./results/result.xlsx")
 
     col1.image(output)

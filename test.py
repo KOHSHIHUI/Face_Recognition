@@ -66,7 +66,7 @@ if __name__ == "__main__":
     labels = get_label("./data/fsktm")
 
     image = Image.open(
-        "./images/sample_3.jpg"
+        "./images/sample_2.jpg"
     )
 
     faces = detector.detect_faces(np.array(image))
@@ -81,4 +81,4 @@ if __name__ == "__main__":
 
     output.show()
 
-    output.save("./results/sample_3.jpg")
+    output.save("./results/sample_2.jpg")
